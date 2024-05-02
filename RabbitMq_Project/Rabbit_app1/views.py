@@ -9,7 +9,8 @@ def create_order(request):
         data = request.POST
         order = Order.objects.create(
             customer_name=data['customer_name'],
-            total_amount=data['total_amount']
+            total_amount=data['total_amount'],
+            customer_email=data['customer_email']
         )
         publish_order_confirmation(order.order_id)
         return JsonResponse({'order_id': order.order_id})
@@ -21,3 +22,4 @@ def publish_order_confirmation(order_id):
     channel.basic_publish(exchange='', routing_key='order_confirmation_queue', body=str(order_id))
     print("Order Confirmation Published:", order_id)
     connection.close()
+    
