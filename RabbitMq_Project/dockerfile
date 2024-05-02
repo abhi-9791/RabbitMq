@@ -1,0 +1,7 @@
+FROM python:3.12.0
+ENV PYTHONBUGGERED 1
+WORKDIR /Rabbit
+COPY requirements.txt Rabbit/requirements.txt
+RUN pip install -r requirements.txt
+COPY . /Rabbit
+CMD python manage.py runserver 0.0.0.0:8000
